@@ -1,0 +1,24 @@
+<% layout('./layouts/boilerplate') %>
+<h1>News</h1>
+<div>
+    <a href="/news/new">Add a new</a>
+</div>
+<% for (let _new of news) { %>
+    <div class="card mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <img class="card-img-top image-fluid" src="<%= _new.image %>" alt="">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"><%= _new.title %></h5>
+                    <p class="card-text"><%= _new.description %></p>
+                    <p class="card-text">
+                        <small class="text-muted"><%= _new.publicationDate %></small>
+                    </p>
+                    <a  class="btn btn-primary" href="/news/<%= _new._id %>">View <%= _new.title %></a>
+                </div>  
+            </div>
+        </div>
+    </div>
+<% } %>

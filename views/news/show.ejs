@@ -1,0 +1,30 @@
+<% layout('./layouts/boilerplate') %>
+<div class="row">
+  <div class="col-6 offset-3">
+    <div class="card mb-3">
+      <img class="card-img-top" src="<%= _new.image %>" alt="" />
+    </div>
+    <div class="card-body">
+      <h5 class="card-title"><%= _new.title %></h5>
+      <p class="card-text"><%= _new.content %></p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item text-muted"><%= _new.publicationDate %></li>
+    </ul>
+    <div class="card-body">
+      <a href="/news/<%= _new._id %>/edit" class="card-link btn btn-info"
+        >Edit</a
+      >
+      <form
+        class="d-inline"
+        action="/news/<%= _new._id %>?_method=DELETE"
+        method="POST"
+      >
+        <button class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+    <div class="card-footer text-center">
+      <a href="/news">All News</a>
+    </div>
+  </div>
+</div>
