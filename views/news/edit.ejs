@@ -2,22 +2,34 @@
 <div class="row">
     <h1 class="text-center">Edit New</h1>
     <div class="col-6 offset-3">
-        <form action="/news<%= _new._id %>?_method=PUT" method="POST">
+        <form action="/news/<%= _new._id %>?_method=PUT" method="POST" class="needs-validation" novalidate>
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" id="title" class="form-control" name="_new[title]" value="<%= _new.title %>">
+                <input type="text" id="title" class="form-control" name="_new[title]" value="<%= _new.title %>" required>
+                <div class="valid-feedback">
+                    Looks good!
+                  </div>
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Image</label>
-                <input type="text" id="title" class="form-control" name="_new[image]" value="<%= _new.image %>">
+                <input type="text" id="title" class="form-control" name="_new[image]" value="<%= _new.image %>" required>
+                <div class="valid-feedback">
+                    Looks good!
+                  </div>
             </div>
             <div class="mb-3">
-                <label for="title" class="form-label"></label>
-                <input type="text" id="title" class="form-control" name="_new[description]" value="<% _new.description %>">
+                <label for="title" class="form-label">Description</label>
+                <input type="text" id="title" class="form-control" name="_new[description]" value="<%= _new.description %>" required>
+                <div class="valid-feedback">
+                    Looks good!
+                  </div>
             </div>
             <div class="mb-3">
                 <label for="title" class="form-label">Content</label>
-                <textarea type="text" id="title" class="form-control" name="_new[content]"><%= _new.content %></textarea>
+                <textarea type="text" id="title" class="form-control" name="_new[content]" required><%= _new.content %></textarea>
+                <div class="valid-feedback">
+                    Looks good!
+                  </div>
             </div>
             <div class="mb-3">
                 <button class="btn btn-success">Upload</button>

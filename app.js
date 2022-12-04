@@ -8,6 +8,13 @@ const methodOverride = require("method-override");
 // Schema
 const newsModel = require("./models/news");
 
+// Error handler
+const ExpressError = require("./utils/ExpressError");
+
+// Router Imports
+const news = require('./routers/news.js')
+const comments = require('./routers/comments.js')
+
 // Database Conection
 mongoose.connect("mongodb://127.0.0.1:27017/a0000ProjectNew", {
   useUnifiedTopology: true,
@@ -31,45 +38,18 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-// News Part ( WE WILL USE ROUTER JUST FOR NOW EVERYTHING HERE )
-// GET REQUEST
-app.get("/news", async (req, res) => {
-  const news = await newsModel.find({});
-  res.render("news/index.ejs", { news });
-});
-app.get("/news/new", (req, res) => {
-  res.render("news/new.ejs");
-});
-app.get("/news/:id", async (req, res) => {
-  const id = req.params.id
-  const _new = await newsModel.findById(id);
-  res.render("news/show.ejs", { _new });
-});
-app.get("/news/:id/edit", async (req, res) => {
-  const id = req.params.id
-  const _new = await newsModel.findById(id);
-  res.render("news/edit.ejs", { _new });
-});
+// Routers
+app.use('/news', news)
+app.use('/news/:id/comments', comments)
 
-// POST REQUEST
-app.post("/news", async (req, res) => {
-  const _new = new newsModel(req.body._new);
-  await _new.save();
-  res.redirect(`/news/${_new._id}`);
+// Error Handlers
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Pafe Not Found", 404));
 });
-
-// PUT REQUEST
-app.put("/news/:id", async (req, res) => {
-  const id = req.params.id
-  const _new = await newsModel.findByIdAndUpdate(id, { ...req.body._new });
-  res.redirect(`/news/${_new._id}`);
-});
-
-// DELETE REQUEST
-app.delete("/news/:id", async (req, res) => {
-  const id = req.params.id
-  await newsModel.findByIdAndDelete(id);
-  res.redirect("/news");
+app.use((err, req, res, next) => {
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = "Something went wrong!";
+  res.status(statusCode).render("error", { err });
 });
 
 // LISTENING LOCALHOST

@@ -1,6 +1,8 @@
+// Imports 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+// Creating schema
 const newsSchema = new Schema({
     title: String,
     image: String,
@@ -9,4 +11,5 @@ const newsSchema = new Schema({
     description: String,
 })
 
+// Returning page to app.js
 module.exports = mongoose.model('News', newsSchema)
