@@ -7,7 +7,8 @@ const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 
 // Import Schema
-const comments = require("../models/comments");
+const commentsModel = require("../models/comments");
+const newsModel = require('../models/news')
 
 // Validation Schema
 const { commentsSchema } = require("../schemas.js");
@@ -20,6 +21,26 @@ const validateComments = (req, res, next) => {
     next();
   }
 };
+
+// POST NEW COMMENT
+router.post('/', validateComments, catchAsync(async (req, res) => {
+  const id = req.params.id
+  const comment = new commentsModel(req.body.comments)
+  const _new = await newsModel.findById(id)
+  _new.comments.push(comment)
+  await _new.save()
+  await comment.save()
+  res.redirect(`/news/${_new._id}`)
+}))
+
+// DELETE DELETE COMMENT
+router.delete('/:commentId', catchAsync(async (req, res) => {
+  const id = req.params.id
+  const commentId = req.params.commentId
+  await newsModel.findByIdAndUpdate(id, {$pull: {comments: commentId}})
+  await commentsModel.findByIdAndDelete(commentId)
+  res.redirect(`/news/${id}`)
+}))
 
 // Returning page to app.js
 module.exports = router;

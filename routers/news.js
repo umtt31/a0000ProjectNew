@@ -36,7 +36,7 @@ router.get(
   "/:id",
   catchAsync(async (req, res) => {
     const id = req.params.id;
-    const _new = await newsModel.findById(id);
+    const _new = await newsModel.findById(id).populate('comments');
     res.render("news/show.ejs", { _new });
   })
 );
