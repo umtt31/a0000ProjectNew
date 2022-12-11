@@ -2,8 +2,8 @@
 const Joi = require('joi')
 
 // News Schema Validate Schema
-module.exports.newsSchema = Joi.object({
-    _new: Joi.object({
+module.exports.reportsSchema = Joi.object({
+    report: Joi.object({
         title: Joi.string().required(),
         image: Joi.string().required(),
         // publicationDate: { type: Date, default: Date.now() },

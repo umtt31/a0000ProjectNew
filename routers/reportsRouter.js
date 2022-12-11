@@ -7,12 +7,12 @@ const catchAsync = require("../utils/catchAsync");
 const ExpressError = require("../utils/ExpressError");
 
 // Import Schema
-const newsModel = require("../models/news");
+const Reports = require("../models/reports");
 
 // Validation Schema
-const { newsSchema } = require("../schemas.js");
-const validateNews = (req, res, next) => {
-  const { error } = newsSchema.validate(req.body);
+const { reportsSchema } = require("../schemas.js");
+const validateReports = (req, res, next) => {
+  const { error } = reportsSchema.validate(req.body);
   if (error) {
     const msg = error.details.map((el) => el.message).join(",");
     throw new ExpressError(msg, 400);
@@ -25,8 +25,8 @@ const validateNews = (req, res, next) => {
 router.get(
   "/",
   catchAsync(async (req, res) => {
-    const news = await newsModel.find({});
-    res.render("news/index.ejs", { news });
+    const reports = await Reports.find({});
+    res.render("news/index.ejs", { reports });
   })
 );
 router.get("/new", (req, res) => {
@@ -36,38 +36,38 @@ router.get(
   "/:id",
   catchAsync(async (req, res) => {
     const id = req.params.id;
-    const _new = await newsModel.findById(id).populate('comments');
-    res.render("news/show.ejs", { _new });
+    const report = await Reports.findById(id).populate('comments');
+    res.render("news/show.ejs", { report });
   })
 );
 router.get(
   "/:id/edit",
   catchAsync(async (req, res) => {
     const id = req.params.id;
-    const _new = await newsModel.findById(id);
-    res.render("news/edit.ejs", { _new });
+    const report = await Reports.findById(id);
+    res.render("news/edit.ejs", { report });
   })
 );
 
 // POST REQUEST
 router.post(
   "/",
-  validateNews,
+  validateReports,
   catchAsync(async (req, res) => {
-    const _new = new newsModel(req.body._new);
-    await _new.save();
-    res.redirect(`/news/${_new._id}`);
+    const report = new Reports(req.body.report);
+    await report.save();
+    res.redirect(`/news/${report._id}`);
   })
 );
 
 // PUT REQUEST
 router.put(
   "/:id",
-  validateNews,
+  validateReports,
   catchAsync(async (req, res) => {
     const id = req.params.id;
-    const _new = await newsModel.findByIdAndUpdate(id, { ...req.body._new });
-    res.redirect(`/news/${_new._id}`);
+    const report = await Reports.findByIdAndUpdate(id, { ...req.body.report });
+    res.redirect(`/news/${report._id}`);
   })
 );
 
@@ -76,7 +76,7 @@ router.delete(
   "/:id",
   catchAsync(async (req, res) => {
     const id = req.params.id;
-    await newsModel.findByIdAndDelete(id);
+    await Reports.findByIdAndDelete(id);
     res.redirect("/news");
   })
 );

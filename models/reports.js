@@ -1,13 +1,12 @@
 // Imports 
 const mongoose = require('mongoose')
-const { commentsSchema } = require('../schemas')
 const Schema = mongoose.Schema
 
 // Import comments
-const commentsModel = require('./comments')
+const Comments = require('./comments')
 
 // Creating schema
-const newsSchema = new Schema({
+const reportsSchema = new Schema({
     title: String,
     image: String,
     publicationDate: { type: Date, default: Date.now() },
@@ -22,9 +21,9 @@ const newsSchema = new Schema({
 })
 
 // Deleting Middleware
-newsSchema.post('findOneAndDelete', async (doc) => {
+reportsSchema.post('findOneAndDelete', async (doc) => {
     if(doc) {
-        await commentsModel.deleteMany({
+        await Comments.deleteMany({
             _id: {
                 $in: doc.comments,
             }
@@ -33,4 +32,4 @@ newsSchema.post('findOneAndDelete', async (doc) => {
 })
 
 // Returning page to app.js
-module.exports = mongoose.model('News', newsSchema)
+module.exports = mongoose.model('Reports', reportsSchema)

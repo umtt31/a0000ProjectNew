@@ -2,31 +2,31 @@
 <div class="row">
     <h1 class="text-center">Edit New</h1>
     <div class="col-6 offset-3">
-        <form action="/news/<%= _new._id %>?_method=PUT" method="POST" class="needs-validation" novalidate>
+        <form action="/news/<%= report._id %>?_method=PUT" method="POST" class="needs-validation" novalidate>
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" id="title" class="form-control" name="_new[title]" value="<%= _new.title %>" required>
+                <input type="text" id="title" class="form-control" name="report[title]" value="<%= report.title %>" required>
                 <div class="valid-feedback">
                     Looks good!
                   </div>
             </div>
             <div class="mb-3">
                 <label for="image" class="form-label">Image</label>
-                <input type="text" id="title" class="form-control" name="_new[image]" value="<%= _new.image %>" required>
+                <input type="text" id="title" class="form-control" name="report[image]" value="<%= report.image %>" required>
                 <div class="valid-feedback">
                     Looks good!
                   </div>
             </div>
             <div class="mb-3">
                 <label for="title" class="form-label">Description</label>
-                <input type="text" id="title" class="form-control" name="_new[description]" value="<%= _new.description %>" required>
+                <input type="text" id="title" class="form-control" name="report[description]" value="<%= report.description %>" required>
                 <div class="valid-feedback">
                     Looks good!
                   </div>
             </div>
             <div class="mb-3">
                 <label for="title" class="form-label">Content</label>
-                <textarea type="text" id="title" class="form-control" name="_new[content]" required><%= _new.content %></textarea>
+                <textarea type="text" id="title" class="form-control" name="report[content]" required><%= report.content %></textarea>
                 <div class="valid-feedback">
                     Looks good!
                   </div>

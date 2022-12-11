@@ -6,14 +6,14 @@ const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 
 // Schema
-const newsModel = require("./models/news");
+const newsModel = require("./models/reports");
 
 // Error handler
 const ExpressError = require("./utils/ExpressError");
 
 // Router Imports
-const news = require('./routers/news.js')
-const comments = require('./routers/comments.js')
+const reportsRouter = require('./routers/reportsRouter.js')
+const commentsRouter = require('./routers/commentsRouter.js')
 
 // Database Conection
 mongoose.connect("mongodb://127.0.0.1:27017/a0000ProjectNew", {
@@ -39,8 +39,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 // Routers
-app.use('/news', news)
-app.use('/news/:id/comments', comments)
+app.use('/news', reportsRouter)
+app.use('/news/:id/comments', commentsRouter)
 
 // Error Handlers
 app.all("*", (req, res, next) => {

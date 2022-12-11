@@ -2,22 +2,22 @@
 <div class="row">
   <div class="col-6">
     <div class="card mb-3">
-      <img class="card-img-top" src="<%= _new.image %>" alt="" />
+      <img class="card-img-top" src="<%= report.image %>" alt="" />
     </div>
     <div class="card-body">
-      <h5 class="card-title"><%= _new.title %></h5>
-      <p class="card-text"><%= _new.description %></p>
+      <h5 class="card-title"><%= report.title %></h5>
+      <p class="card-text"><%= report.description %></p>
     </div>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item text-muted"><%= _new.publicationDate %></li>
+      <li class="list-group-item text-muted"><%= report.publicationDate %></li>
     </ul>
     <div class="card-body">
-      <a href="/news/<%= _new._id %>/edit" class="card-link btn btn-info"
+      <a href="/news/<%= report._id %>/edit" class="card-link btn btn-info"
         >Edit</a
       >
       <form
         class="d-inline"
-        action="/news/<%= _new._id %>?_method=DELETE"
+        action="/news/<%= report._id %>?_method=DELETE"
         method="POST"
       >
         <button class="btn btn-danger">Delete</button>
@@ -29,7 +29,7 @@
   </div>
   <div class="col-6">
     <h2 class="mb-3">Leave a Comment</h2>
-    <form action="/news/<%= _new._id %>/comments" class="needs-validation mb-3" method="POST" novalidate>
+    <form action="/news/<%= report._id %>/comments" class="needs-validation mb-3" method="POST" novalidate>
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input type="text" class="form-control" id="title" name="comments[title]" required>
@@ -40,12 +40,12 @@
       </div>
       <button class="btn btn-success">Submit</button>
     </form>
-    <% for(let comment of _new.comments) { %>
+    <% for(let comment of report.comments) { %>
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title"><%= comment.title %></h5>
           <p class="card-text"><%= comment.body %></p>
-          <form action="/news/<%= _new._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+          <form action="/news/<%= report._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
             <button class="btn btn-sm btn-danger">Delete</button>
           </form>
         </div>
