@@ -37,6 +37,10 @@ router.get(
   catchAsync(async (req, res) => {
     const id = req.params.id;
     const report = await Reports.findById(id).populate('comments');
+    if (!report) {
+      req.flash("error", "Cannot find that report!");
+      return res.redirect("/news");
+    }
     res.render("news/show.ejs", { report });
   })
 );
@@ -45,6 +49,10 @@ router.get(
   catchAsync(async (req, res) => {
     const id = req.params.id;
     const report = await Reports.findById(id);
+    if (!report) {
+      req.flash("error", "Cannot find that report!");
+      return res.redirect("/news");
+    }
     res.render("news/edit.ejs", { report });
   })
 );
@@ -56,6 +64,7 @@ router.post(
   catchAsync(async (req, res) => {
     const report = new Reports(req.body.report);
     await report.save();
+    req.flash("success", "Successfully made a new report!");
     res.redirect(`/news/${report._id}`);
   })
 );
@@ -67,6 +76,7 @@ router.put(
   catchAsync(async (req, res) => {
     const id = req.params.id;
     const report = await Reports.findByIdAndUpdate(id, { ...req.body.report });
+    req.flash("success", "Report successfully updated!");
     res.redirect(`/news/${report._id}`);
   })
 );
@@ -77,6 +87,7 @@ router.delete(
   catchAsync(async (req, res) => {
     const id = req.params.id;
     await Reports.findByIdAndDelete(id);
+    req.flash("success", "Report successfully deleted!");
     res.redirect("/news");
   })
 );

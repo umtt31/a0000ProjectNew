@@ -30,6 +30,7 @@ router.post('/', validateComments, catchAsync(async (req, res) => {
   report.comments.push(comment)
   await report.save()
   await comment.save()
+  req.flash("success", "Comment Created!");
   res.redirect(`/news/${report._id}`)
 }))
 
@@ -39,6 +40,7 @@ router.delete('/:commentId', catchAsync(async (req, res) => {
   const commentId = req.params.commentId
   await Reports.findByIdAndUpdate(id, {$pull: {comments: commentId}})
   await Comments.findByIdAndDelete(commentId)
+  req.flash("success", "Comment successfully deleted!");
   res.redirect(`/news/${id}`)
 }))
 
